@@ -33,7 +33,7 @@ h2 {
   transition:
     background-color ease-in-out 0.5s,
     transform ease-in-out 0.5s;
-  border-radius: 20px;
+  border-radius: 10px;
   color: white;
   text-decoration: none;
   padding: 10px;
@@ -46,11 +46,15 @@ h2 {
 }
 .navbar a:hover {
   color: white;
-  background-color: rgb(60, 60, 60);
+  background-color: rgba(217, 216, 180, 0.523);
   transform: scale(1.05);
 }
 .tasks{
     display:flex;
     flex-wrap: wrap;
     -ms-flex-align: center;
+}
+.about{
+    display:flex;
+    justify-content: center;
 }
