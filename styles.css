@@ -49,3 +49,8 @@ h2 {
   background-color: rgb(60, 60, 60);
   transform: scale(1.05);
 }
+.tasks{
+    display:flex;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+}
