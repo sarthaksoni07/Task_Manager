@@ -61,5 +61,7 @@ h2 {
 .container{
   display:flex;
   justify-content: center;
-  list-style: none;
+}
+.container li{
+  list-style: none;;
 }
