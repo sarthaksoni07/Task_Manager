@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>Completed Tasks</title>
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <header>
@@ -12,19 +12,22 @@
       <nav>
         <ul class="navbar">
           <li><a href="index.html">Home</a></li>
-          <li><a href="completed.html">Completed</a></li>
-          <li><a href="pending.html">Pending</a></li>
           <li><a href="about.html">About</a></li>
         </ul>
       </nav>
     </header>
     <main>
-        <h2>Completed Tasks</h2>
-        <div class="tasks" id="completed-tasks">
+      <h2>Tasks</h2>
+      <div class = "container">
+        <input type="text" id="taskInput" placeholder="Enter a task">
+        <button id="addTaskBtn">Add</button>
+      </div>
 
-        </div>
+      <ul id="taskList">
+
+      </ul>
     </main>
     <footer></footer>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>
