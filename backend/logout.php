@@ -1,7 +1,9 @@
 <?php
-include "config.php";
 
+require_once __DIR__ . '/common.php';
+require_post();
+
+$_SESSION = [];
 session_destroy();
 
-echo json_encode(["success" => true]);
-?>
+send_json(['ok' => true, 'message' => 'Logged out']);

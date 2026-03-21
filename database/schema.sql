@@ -1,16 +1,19 @@
-CREATE TABLE users (
+CREATE DATABASE IF NOT EXISTS task_manager_app;
+USE task_manager_app;
+
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100),
-    email VARCHAR(100) UNIQUE,
-    password VARCHAR(255),
+    username VARCHAR(60) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE tasks (
+CREATE TABLE IF NOT EXISTS tasks (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    task_text TEXT,
-    status ENUM('pending','completed') DEFAULT 'pending',
+    user_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    status ENUM('pending', 'completed') NOT NULL DEFAULT 'pending',
+    completed_at DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

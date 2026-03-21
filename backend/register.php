@@ -1,23 +1,47 @@
 <?php
-include "config.php";
 
-$username = $_POST['username'];
-$email = $_POST['email'];
-$password = $_POST['password'];
+require_once __DIR__ . '/common.php';
+require_post();
 
-if (!$username || !$email || !$password) {
-    echo json_encode(["success" => false, "message" => "All fields required"]);
-    exit();
+$username = post('username');
+$password = $_POST['password'] ?? '';
+
+if ($username === '' || $password === '') {
+    send_json(['ok' => false, 'message' => 'Username and password are required'], 400);
 }
 
-$hash = password_hash($password, PASSWORD_DEFAULT);
+$conn = db();
 
-$stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-$stmt->bind_param("sss", $username, $email, $hash);
+$check = $conn->prepare('SELECT id FROM users WHERE username = ? LIMIT 1');
+$check->bind_param('s', $username);
+$check->execute();
+$check->store_result();
 
-if ($stmt->execute()) {
-    echo json_encode(["success" => true]);
-} else {
-    echo json_encode(["success" => false, "message" => "User exists"]);
+if ($check->num_rows > 0) {
+    $check->close();
+    $conn->close();
+    send_json(['ok' => false, 'message' => 'Username already exists'], 409);
 }
-?>
+$check->close();
+
+$passwordHash = password_hash($password, PASSWORD_DEFAULT);
+$stmt = $conn->prepare('INSERT INTO users (username, password_hash) VALUES (?, ?)');
+$stmt->bind_param('ss', $username, $passwordHash);
+
+if (!$stmt->execute()) {
+    $stmt->close();
+    $conn->close();
+    send_json(['ok' => false, 'message' => 'Register failed'], 500);
+}
+
+$_SESSION['user_id'] = $stmt->insert_id;
+$_SESSION['username'] = $username;
+
+$stmt->close();
+$conn->close();
+
+send_json([
+    'ok' => true,
+    'message' => 'Registered',
+    'user' => ['id' => $_SESSION['user_id'], 'username' => $_SESSION['username']]
+]);
