@@ -1,4 +1,3 @@
-// Uses the same host as the frontend page to avoid third-party cookie blocking.
 const API_BASE = `http://${window.location.hostname}/backend`;
 
 const authCard = document.getElementById('authCard');
